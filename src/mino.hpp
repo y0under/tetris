@@ -33,7 +33,6 @@ namespace tetris
       std::vector<MinoStatus> mino_array_;
 
       // function
-      void mino_initializer ();
       void mino_initialize_I ();
       void mino_initialize_O ();
       void mino_initialize_S ();
@@ -44,6 +43,9 @@ namespace tetris
 
     public:
       Mino ();
+      void mino_initializer ();
+      int get_number_of_types_mino ();
+      MinoStatus get_mino_status (int type);
   };
 } // namespace tetris
 

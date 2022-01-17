@@ -11,11 +11,11 @@ Screen::Screen ()
     for (int j = 0; j < SCREEN_WIDTH_; ++j)
       screen_array_.at(i).at(j) = BLANK_MAEKER_;
 
-  set_wall ();
+  create_first_wall ();
 }
 
 void tetris::
-Screen::set_wall ()
+Screen::create_first_wall ()
 {
   // floor
   for (int i = 0; i < SCREEN_WIDTH_; ++i)
@@ -36,7 +36,7 @@ Screen::print_screen ()
   std::system ("clear");
 #endif
 
-  set_screen ();
+  // set_screen ();
   for (int i = 0; i < SCREEN_HEIGHT_; ++i) {
     for (int j = 0; j < SCREEN_WIDTH_; ++j) {
       printf ("%s", MARKER_CHAR_.at (screen_array_.at(i).at(j)).c_str ());
@@ -45,16 +45,55 @@ Screen::print_screen ()
   }
 }
 
+const std::vector<std::vector<int> >
+tetris::Screen::get_screen_array ()
+{
+  return screen_array_;
+}
+/*
+void tetris::
+Screen::set_screen ()
+{
+  // clear_screen ();
+  set_mino_to_screen ();
+}
+*/
+
+int tetris::
+Screen::get_wall_marker ()
+{
+  return WALL_MARKER_;
+}
+
+void tetris::
+Screen::set_wall (const int y, const int x)
+{
+  screen_array_.at(y).at(x) = WALL_MARKER_;
+}
+
 void tetris::
 Screen::set_mino_to_screen (
     const int left_top_x,
     const int left_top_y,
     const int height,
-    const int width
+    const int width,
     const std::vector<std::vector<int> > mino_matrix)
 {
-  for (int i = left_top_y; i < left_top_y + height; ++i)
-    for (int j = left_top_x; j < left_top_x + width; ++j)
-      if (1 == mino_matrix.at(i).at(j)) {
-        screen_array_.at(i).at(j) = MINO_MARKER_;
+  for (int i = 0; i < height; ++i)
+    for (int j = 0; j < width; ++j)
+      if (1 == mino_matrix.at(i).at(j) &&
+          (WALL_MARKER_ !=
+           screen_array_.at(left_top_y + i).at(left_top_x + j))) {
+        screen_array_.at(left_top_y + i).at(left_top_x + j)
+          = MINO_MARKER_;
+      }
+}
+
+void tetris::
+Screen::erase_mino_on_screen ()
+{
+  for (int i = 0; i < SCREEN_HEIGHT_; ++i)
+    for (int j = 0; j < SCREEN_WIDTH_; ++j)
+      if (MINO_MARKER_ == screen_array_.at(i).at(j))
+        screen_array_.at(i).at(j) = BLANK_MAEKER_;
 }

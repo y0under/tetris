@@ -3,8 +3,6 @@
 tetris::
 Mino::Mino ()
 {
-  mino_array_.resize (NUMBER_OF_TYPES_MINO_);
-
   mino_initializer ();
 }
 
@@ -88,4 +86,16 @@ Mino::mino_initialize_T ()
       {1, 1, 1},
       {0, 1, 0},
       {0, 0, 0}}});
+}
+
+int tetris::
+Mino::get_number_of_types_mino ()
+{
+  return NUMBER_OF_TYPES_MINO_;
+}
+
+tetris::Mino::MinoStatus
+tetris::Mino::get_mino_status (int mino_type)
+{
+  return mino_array_.at(mino_type);
 }

@@ -26,10 +26,6 @@ namespace tetris
         NUMBER_OF_TYPES_MINO_
       };
 
-      // value
-      const int MINO_HEIGHT_ = 4;
-      const int MINO_WIDTH_  = 4;
-
       std::vector<MinoStatus> mino_array_;
 
       // function

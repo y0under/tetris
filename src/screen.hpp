@@ -26,6 +26,8 @@ namespace tetris
 
       // function
       void create_first_wall ();
+      void delete_row (int y);
+      void copy_row_to_under (int y);
 
     public:
       // value
@@ -41,6 +43,7 @@ namespace tetris
           const int height, const int width,
           const std::vector<std::vector<int> > mino_matrix);
       void erase_mino_on_screen ();
+      void delete_row_processing ();
       const std::vector<std::vector<int> > get_screen_array ();
       int get_wall_marker ();
 

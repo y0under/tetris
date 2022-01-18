@@ -97,3 +97,34 @@ Screen::erase_mino_on_screen ()
       if (MINO_MARKER_ == screen_array_.at(i).at(j))
         screen_array_.at(i).at(j) = BLANK_MAEKER_;
 }
+
+void tetris::
+Screen::delete_row_processing ()
+{
+  for (int i = 0; i < SCREEN_HEIGHT_ - 1; ++i) {
+    for (int j = 1; j < SCREEN_WIDTH_ - 1; ++ j) {
+      if (WALL_MARKER_ != screen_array_.at(i).at(j))
+        break;
+      if (SCREEN_WIDTH_ - 2 == j) {
+        delete_row (i);
+        copy_row_to_under (i);
+      }
+    }
+  }
+}
+
+void tetris::
+Screen::delete_row (int y)
+{
+  for (int i = 1; i < SCREEN_WIDTH_ - 1; ++i)
+    screen_array_.at(y).at(i) = BLANK_MAEKER_;
+}
+
+void tetris::
+Screen::copy_row_to_under (int y)
+{
+  for (int i = y; i != 0; --i)
+    for (int j = 1; j < SCREEN_WIDTH_ - 1; ++j)
+      screen_array_.at(i).at(j) =
+        screen_array_.at(i - 1).at(j);
+}

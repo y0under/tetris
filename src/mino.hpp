@@ -42,10 +42,18 @@ namespace tetris
       void mino_initialize_T ();
 
     public:
+      enum {
+        LEFT_ROT_,
+        RIGHT_ROT_,
+        ROT_TYPES_
+      };
+
       Mino ();
       void mino_initializer ();
+      void rotation_mino (int mino_type, int direction);
       int get_number_of_types_mino ();
       MinoStatus get_mino_status (int type);
+
   };
 } // namespace tetris
 

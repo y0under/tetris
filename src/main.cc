@@ -4,8 +4,6 @@
 #include <string>
 #include <vector>
 
-//#include <iostream>
-
 #ifdef _WINDOWS
 #include <conio.h>
 #include <kbhit.h>
@@ -28,19 +26,23 @@ namespace tetris
       int mino_left_top_x_;
       int mino_left_top_y_;
       int mino_type_;
-      const int FPS      = 5;
+      const int FPS      = 2;
       const int INTERVAL = 1'000'000 / FPS;
 
       // function
       void generate_mino (std::uint32_t random_number, const int type_of_mino);
       void create_wall (
           const int mino_height,
-          const int mino_witdh,
+          const int mino_width,
           const std::vector<std::vector<int> > mino_matrix);
       void keybord_processing ();
+      void print_screen_processing (
+          const int mino_height,
+          const int mino_width,
+          const std::vector<std::vector<int> > mino_matrix);
       bool is_intersect_mino_wall (
           const int mino_height,
-          const int mino_witdh,
+          const int mino_width,
           const std::vector<std::vector<int> > mino_matrix);
 
     public:
@@ -77,12 +79,11 @@ Tetris::tetris_processing ()
           mino_left_top_x_ = befor_x;
         }
 
+        mino_status = mino_.get_mino_status (mino_type_);
         screen_.erase_mino_on_screen ();
 
-        screen_.set_mino_to_screen (
-            mino_left_top_x_, mino_left_top_y_,
-            mino_status.height_, mino_status.width_,
-            mino_status.mino_matrix_);
+        print_screen_processing (
+            mino_status.height_, mino_status.width_, mino_status.mino_matrix_);
 
         screen_.print_screen ();
       }
@@ -92,16 +93,8 @@ Tetris::tetris_processing ()
         continue;
 
       last_clock = now_clock;
-
-      screen_.erase_mino_on_screen ();
-
-      screen_.set_mino_to_screen (
-          mino_left_top_x_, mino_left_top_y_,
-          mino_status.height_, mino_status.width_,
-          mino_status.mino_matrix_);
-
-      screen_.print_screen ();
-
+      print_screen_processing (
+          mino_status.height_, mino_status.width_, mino_status.mino_matrix_);
       ++mino_left_top_y_;
 
       if (is_intersect_mino_wall (
@@ -112,7 +105,25 @@ Tetris::tetris_processing ()
         break;
       }
     }
+    screen_.delete_row_processing ();
+    screen_.print_screen ();
   }
+}
+
+void tetris::
+Tetris::print_screen_processing (
+    const int mino_height,
+    const int mino_width,
+    const std::vector<std::vector<int> > mino_matrix)
+{
+      screen_.erase_mino_on_screen ();
+      screen_.set_mino_to_screen (
+          mino_left_top_x_,
+          mino_left_top_y_,
+          mino_height,
+          mino_width,
+          mino_matrix);
+      screen_.print_screen ();
 }
 
 void tetris::
@@ -124,13 +135,13 @@ Tetris::generate_mino (std::uint32_t random_number, const int type_of_mino)
 bool tetris::
 Tetris::is_intersect_mino_wall (
     const int mino_height,
-    const int mino_witdh,
+    const int mino_width,
     const std::vector<std::vector<int> > mino_matrix)
 {
   auto screen_array = screen_.get_screen_array ();
 
   for (int i = 0; i < mino_height; ++i) {
-    for (int j = 0; j < mino_witdh; ++j) {
+    for (int j = 0; j < mino_width; ++j) {
       if (1 == mino_matrix.at(i).at(j) &&
           (screen_.get_wall_marker () ==
            screen_array.at(mino_left_top_y_ + i).at(mino_left_top_x_ + j)))
@@ -143,12 +154,12 @@ Tetris::is_intersect_mino_wall (
 void tetris::
 Tetris::create_wall (
     const int mino_height,
-    const int mino_witdh,
+    const int mino_width,
     const std::vector<std::vector<int> > mino_matrix)
 {
   auto screen_array = screen_.get_screen_array ();
   for (int i = 0; i < mino_height; ++i) {
-    for (int j = 0; j < mino_witdh; ++j) {
+    for (int j = 0; j < mino_width; ++j) {
       if (0 == mino_matrix.at(i).at(j))
         continue;
       screen_.set_wall (mino_left_top_y_ + i, mino_left_top_x_ + j);
@@ -168,6 +179,12 @@ Tetris::keybord_processing ()
       break;
     case 's':
       ++mino_left_top_y_;
+      break;
+    case 'l':
+      mino_.rotation_mino (mino_type_, mino_.LEFT_ROT_);
+      break;
+    case 'r':
+      mino_.rotation_mino (mino_type_, mino_.RIGHT_ROT_);
       break;
   }
 }

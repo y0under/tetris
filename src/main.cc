@@ -31,19 +31,14 @@ namespace tetris
 
       // function
       void generate_mino (std::uint32_t random_number, const int type_of_mino);
-      void create_wall (
-          const int mino_height,
-          const int mino_width,
-          const std::vector<std::vector<int> > mino_matrix);
+      void create_wall ();
+      void set_point_mino_top ();
       void keybord_processing ();
-      void print_screen_processing (
-          const int mino_height,
-          const int mino_width,
-          const std::vector<std::vector<int> > mino_matrix);
-      bool is_intersect_mino_wall (
-          const int mino_height,
-          const int mino_width,
-          const std::vector<std::vector<int> > mino_matrix);
+      void when_any_input_form_keybord ();
+      void input_processing_from_keybord ();
+      void print_screen_processing ();
+      void arrive_bottom_processing ();
+      bool is_intersect_mino_wall ();
 
     public:
       // function
@@ -63,47 +58,23 @@ Tetris::tetris_processing ()
   while (1) {
     generate_mino (engine (), mino_.get_number_of_types_mino ());
     screen_.print_screen ();
-    auto mino_status
-      = mino_.get_mino_status (mino_type_);
-      mino_left_top_x_
-        = (screen_.SCREEN_WIDTH_ - mino_status.width_) / 2;
-      mino_left_top_y_ = 0;
+    set_point_mino_top ();
+    if (is_intersect_mino_wall ())
+      break;
     while (1) {
-      int befor_y = mino_left_top_y_;
-      int befor_x = mino_left_top_x_;
-      if (kbhit ()) {
-        keybord_processing ();
-        if (is_intersect_mino_wall (
-              mino_status.height_, mino_status.width_, mino_status.mino_matrix_)) {
-          mino_left_top_y_ = befor_y;
-          mino_left_top_x_ = befor_x;
-        }
-
-        mino_status = mino_.get_mino_status (mino_type_);
-        screen_.erase_mino_on_screen ();
-
-        print_screen_processing (
-            mino_status.height_, mino_status.width_, mino_status.mino_matrix_);
-
-        screen_.print_screen ();
-      }
-
+      keybord_processing ();
       now_clock = clock ();
       if (INTERVAL > now_clock - last_clock)
         continue;
 
       last_clock = now_clock;
-      print_screen_processing (
-          mino_status.height_, mino_status.width_, mino_status.mino_matrix_);
       ++mino_left_top_y_;
 
-      if (is_intersect_mino_wall (
-            mino_status.height_, mino_status.width_, mino_status.mino_matrix_)) {
-        --mino_left_top_y_;
-        create_wall (
-            mino_status.height_, mino_status.width_, mino_status.mino_matrix_);
+      if (is_intersect_mino_wall ()) {
+        arrive_bottom_processing ();
         break;
       }
+      print_screen_processing ();
     }
     screen_.delete_row_processing ();
     screen_.print_screen ();
@@ -111,19 +82,17 @@ Tetris::tetris_processing ()
 }
 
 void tetris::
-Tetris::print_screen_processing (
-    const int mino_height,
-    const int mino_width,
-    const std::vector<std::vector<int> > mino_matrix)
+Tetris::print_screen_processing ()
 {
-      screen_.erase_mino_on_screen ();
-      screen_.set_mino_to_screen (
-          mino_left_top_x_,
-          mino_left_top_y_,
-          mino_height,
-          mino_width,
-          mino_matrix);
-      screen_.print_screen ();
+  auto mino_status = mino_.get_mino_status (mino_type_);
+  screen_.erase_mino_on_screen ();
+  screen_.set_mino_to_screen (
+      mino_left_top_x_,
+      mino_left_top_y_,
+      mino_status.height_,
+      mino_status.width_,
+      mino_status.mino_matrix_);
+  screen_.print_screen ();
 }
 
 void tetris::
@@ -133,16 +102,14 @@ Tetris::generate_mino (std::uint32_t random_number, const int type_of_mino)
 }
 
 bool tetris::
-Tetris::is_intersect_mino_wall (
-    const int mino_height,
-    const int mino_width,
-    const std::vector<std::vector<int> > mino_matrix)
+Tetris::is_intersect_mino_wall ()
 {
+  auto mino_status  = mino_.get_mino_status (mino_type_);
   auto screen_array = screen_.get_screen_array ();
 
-  for (int i = 0; i < mino_height; ++i) {
-    for (int j = 0; j < mino_width; ++j) {
-      if (1 == mino_matrix.at(i).at(j) &&
+  for (int i = 0; i < mino_status.height_; ++i) {
+    for (int j = 0; j < mino_status.width_; ++j) {
+      if (1 == mino_status.mino_matrix_.at(i).at(j) &&
           (screen_.get_wall_marker () ==
            screen_array.at(mino_left_top_y_ + i).at(mino_left_top_x_ + j)))
         return true;
@@ -152,15 +119,14 @@ Tetris::is_intersect_mino_wall (
 }
 
 void tetris::
-Tetris::create_wall (
-    const int mino_height,
-    const int mino_width,
-    const std::vector<std::vector<int> > mino_matrix)
+Tetris::create_wall ()
 {
+  auto mino_status  = mino_.get_mino_status (mino_type_);
   auto screen_array = screen_.get_screen_array ();
-  for (int i = 0; i < mino_height; ++i) {
-    for (int j = 0; j < mino_width; ++j) {
-      if (0 == mino_matrix.at(i).at(j))
+
+  for (int i = 0; i < mino_status.height_; ++i) {
+    for (int j = 0; j < mino_status.width_; ++j) {
+      if (0 == mino_status.mino_matrix_.at(i).at(j))
         continue;
       screen_.set_wall (mino_left_top_y_ + i, mino_left_top_x_ + j);
     }
@@ -168,7 +134,41 @@ Tetris::create_wall (
 }
 
 void tetris::
+Tetris::set_point_mino_top ()
+{
+  auto mino_status = mino_.get_mino_status (mino_type_);
+  mino_left_top_x_
+    = (screen_.SCREEN_WIDTH_ - mino_status.width_) / 2;
+  mino_left_top_y_ = 0;
+}
+
+void tetris::
 Tetris::keybord_processing ()
+{
+  if (!kbhit ())
+    return ;
+  when_any_input_form_keybord ();
+  screen_.erase_mino_on_screen ();
+  print_screen_processing ();
+}
+
+void tetris::
+Tetris::when_any_input_form_keybord ()
+{
+  auto mino_status = mino_.get_mino_status (mino_type_);
+  int befor_y = mino_left_top_y_;
+  int befor_x = mino_left_top_x_;
+
+  input_processing_from_keybord ();
+  if (is_intersect_mino_wall ()) {
+    mino_left_top_y_ = befor_y;
+    mino_left_top_x_ = befor_x;
+  }
+
+}
+
+void tetris::
+Tetris::input_processing_from_keybord ()
 {
   switch (getch ()) {
     case 'a':
@@ -187,6 +187,13 @@ Tetris::keybord_processing ()
       mino_.rotation_mino (mino_type_, mino_.RIGHT_ROT_);
       break;
   }
+}
+
+void tetris::
+Tetris::arrive_bottom_processing ()
+{
+  --mino_left_top_y_;
+  create_wall ();
 }
 
 int main ()

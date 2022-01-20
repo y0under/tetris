@@ -42,6 +42,7 @@ namespace tetris
       void print_screen_processing ();
       void arrive_bottom_processing ();
       bool is_intersect_mino_wall ();
+      void delete_row_processing ();
 
     public:
       // function

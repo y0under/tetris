@@ -45,10 +45,11 @@ namespace tetris
           const int height, const int width,
           const std::vector<std::vector<int> > mino_matrix);
       void erase_mino_on_screen ();
-      void delete_row_processing ();
+      void delete_row_processing (int row_number);
       const std::vector<std::vector<int> > get_screen_array ();
       int get_blank_marker ();
       int get_mino_marker ();
+      int get_fallen_mino_marker ();
 
   };
 } // namespace tetris

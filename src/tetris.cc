@@ -1,5 +1,9 @@
 #include "tetris.hpp"
 
+/*
+ * date: 2022/01/20
+ * what: main processing of tetris
+ */
 void tetris::
 Tetris::tetris_processing ()
 {
@@ -31,11 +35,13 @@ Tetris::tetris_processing ()
       }
       print_screen_processing ();
     }
-    screen_.delete_row_processing ();
-    screen_.print_screen ();
   }
 }
 
+/*
+ * date: 2022/01/20
+ * what: look at function name
+ */
 void tetris::
 Tetris::print_screen_processing ()
 {
@@ -50,6 +56,11 @@ Tetris::print_screen_processing ()
   screen_.print_screen ();
 }
 
+/*
+ * date: 2022/01/20
+ * what: generate new fallen mino
+ *       by std::mt19937
+ */
 void tetris::
 Tetris::generate_mino (std::uint32_t random_number)
 {
@@ -57,8 +68,10 @@ Tetris::generate_mino (std::uint32_t random_number)
     = random_number % mino_.get_number_of_types_mino ();
 }
 
-#include <iostream>
-
+/*
+ * date: 2022/01/20
+ * what: look at function name
+ */
 bool tetris::
 Tetris::is_intersect_mino_wall ()
 {
@@ -82,6 +95,10 @@ Tetris::is_intersect_mino_wall ()
   return false;
 }
 
+/*
+ * date: 2022/01/20
+ * what: processing when arrived bottom
+ */
 void tetris::
 Tetris::fallen_mino_processing ()
 {
@@ -96,6 +113,10 @@ Tetris::fallen_mino_processing ()
   }
 }
 
+/*
+ * date: 2022/01/20
+ * what: determin origin of fallen mino
+ */
 void tetris::
 Tetris::set_point_mino_top ()
 {
@@ -105,6 +126,10 @@ Tetris::set_point_mino_top ()
   mino_left_top_y_ = 0;
 }
 
+/*
+ * date: 2022/01/20
+ * what: sence input from keybord
+ */
 void tetris::
 Tetris::keybord_processing ()
 {
@@ -121,6 +146,10 @@ Tetris::keybord_processing ()
   print_screen_processing ();
 }
 
+/*
+ * date: 2022/01/20
+ * what: branch by kind of char
+ */
 void tetris::
 Tetris::input_processing_from_keybord (
     const char input_char)
@@ -144,6 +173,11 @@ Tetris::input_processing_from_keybord (
   }
 }
 
+/*
+ * date: 2022/01/20
+ * what: undo user's operation
+ * when: intersect mino and wall or mino and loaded mino
+ */
 void tetris::
 Tetris::undo_input_processing (
     const char input_char, const int befor_y, const int befor_x)
@@ -164,9 +198,35 @@ Tetris::undo_input_processing (
   }
 }
 
+/*
+ * date: 2022/01/20
+ * what: look at function name
+ */
 void tetris::
 Tetris::arrive_bottom_processing ()
 {
   --mino_left_top_y_;
   fallen_mino_processing ();
+  delete_row_processing ();
+  screen_.print_screen ();
+}
+
+/*
+ * date: 2022/01/20
+ * what: if complete low,
+ *       delete row
+ */
+void tetris::
+Tetris::delete_row_processing ()
+{
+  auto screen_array = screen_.get_screen_array ();
+  for (int i = 0; i < screen_.SCREEN_HEIGHT_ - 1; ++i) {
+    for (int j = 1; j < screen_.SCREEN_WIDTH_ - 1; ++j) {
+      if (screen_.get_fallen_mino_marker () !=
+          screen_array.at(i).at(j))
+        break;
+      if (j == screen_.SCREEN_WIDTH_ - 2)
+        screen_.delete_row_processing (i);
+    }
+  }
 }

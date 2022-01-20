@@ -1,5 +1,10 @@
 #include "screen.hpp"
 
+/*
+ * date: 2022/01/20
+ * what: constructor
+ * prepare first screen
+ */
 tetris::
 Screen::Screen ()
 {
@@ -14,6 +19,11 @@ Screen::Screen ()
   create_first_wall ();
 }
 
+/*
+ * data: 2022/01/20
+ * what: look at function name
+ * called constructor
+ */
 void tetris::
 Screen::create_first_wall ()
 {
@@ -27,6 +37,10 @@ Screen::create_first_wall ()
   }
 }
 
+/*
+ * data: 2022/01/20
+ * what: look at function name
+ */
 void tetris::
 Screen::print_screen ()
 {
@@ -45,30 +59,62 @@ Screen::print_screen ()
   }
 }
 
+/*
+ * data: 2022/01/20
+ * what: look at function name
+ */
 const std::vector<std::vector<int> >
 tetris::Screen::get_screen_array ()
 {
   return screen_array_;
 }
 
+/*
+ * data: 2022/01/20
+ * what: return mino marker in enum
+ */
 int tetris::
 Screen::get_mino_marker ()
 {
   return MINO_MARKER_;
 }
 
+/*
+ * data: 2022/01/20
+ * what: return blank marker in enum
+ */
 int tetris::
 Screen::get_blank_marker ()
 {
   return BLANK_MARKER_;
 }
 
+/*
+ * data: 2022/01/20
+ * what: return fallen mino marker
+ *       in enum
+ */
+int tetris::
+Screen::get_fallen_mino_marker ()
+{
+  return FALLEN_MINO_MARKER_;
+}
+
+/*
+ * data: 2022/01/20
+ * what: look at function name
+ */
 void tetris::
 Screen::load_mino (const int y, const int x)
 {
   screen_array_.at(y).at(x) = FALLEN_MINO_MARKER_;
 }
 
+/*
+ * data: 2022/01/20
+ * what: set point of mino
+ *       to screen_array_
+ */
 void tetris::
 Screen::set_mino_to_screen (
     const int left_top_x,
@@ -87,6 +133,11 @@ Screen::set_mino_to_screen (
       }
 }
 
+/*
+ * data: 2022/01/20
+ * what: rewrite to blank on screen_array_
+ *       for print screen
+ */
 void tetris::
 Screen::erase_mino_on_screen ()
 {
@@ -96,21 +147,21 @@ Screen::erase_mino_on_screen ()
         screen_array_.at(i).at(j) = BLANK_MARKER_;
 }
 
+/*
+ * data: 2022/01/20
+ * what: look at function name
+ */
 void tetris::
-Screen::delete_row_processing ()
+Screen::delete_row_processing (int row_number)
 {
-  for (int i = 0; i < SCREEN_HEIGHT_ - 1; ++i) {
-    for (int j = 1; j < SCREEN_WIDTH_ - 1; ++ j) {
-      if (FALLEN_MINO_MARKER_ != screen_array_.at(i).at(j))
-        break;
-      if (SCREEN_WIDTH_ - 2 == j) {
-        delete_row (i);
-        copy_row_to_under (i);
-      }
-    }
-  }
+  delete_row (row_number);
+  copy_row_to_under (row_number);
 }
 
+/*
+ * data: 2022/01/20
+ * what: look at function name
+ */
 void tetris::
 Screen::delete_row (int y)
 {
@@ -118,6 +169,11 @@ Screen::delete_row (int y)
     screen_array_.at(y).at(i) = BLANK_MARKER_;
 }
 
+/*
+ * data: 2022/01/20
+ * what: if delete row,
+ *       pad blank row by up row
+ */
 void tetris::
 Screen::copy_row_to_under (int y)
 {

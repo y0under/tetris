@@ -1,11 +1,19 @@
 #include "mino.hpp"
 
+/*
+ * date: 2022/01/20
+ * what: constructor
+ */
 tetris::
 Mino::Mino ()
 {
   mino_initializer ();
 }
 
+/*
+ * date: 2022/01/20
+ * what: create mino pattern
+ */
 void tetris::
 Mino::mino_initializer ()
 {
@@ -18,6 +26,10 @@ Mino::mino_initializer ()
   mino_initialize_T ();
 }
 
+/*
+ * date: 2022/01/20
+ * what: push I matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_I ()
 {
@@ -29,6 +41,10 @@ Mino::mino_initialize_I ()
       {0, 0, 0, 0}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: push O matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_O ()
 {
@@ -38,6 +54,10 @@ Mino::mino_initialize_O ()
       {1, 1}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: push S matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_S ()
 {
@@ -48,6 +68,10 @@ Mino::mino_initialize_S ()
       {0, 0, 0}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: push Z matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_Z ()
 {
@@ -58,6 +82,10 @@ Mino::mino_initialize_Z ()
       {0, 0, 0}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: push J matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_J ()
 {
@@ -68,6 +96,10 @@ Mino::mino_initialize_J ()
       {0, 0, 0}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: push L matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_L ()
 {
@@ -78,6 +110,10 @@ Mino::mino_initialize_L ()
       {0, 0, 0}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: push T matrix to mino_array_
+ */
 void tetris::
 Mino::mino_initialize_T ()
 {
@@ -88,12 +124,20 @@ Mino::mino_initialize_T ()
       {0, 0, 0}}});
 }
 
+/*
+ * date: 2022/01/20
+ * what: getter for number of types mino
+ */
 int tetris::
 Mino::get_number_of_types_mino ()
 {
   return NUMBER_OF_TYPES_MINO_;
 }
 
+/*
+ * date: 2022/01/20
+ * what: getter for particular mino
+ */
 tetris::Mino::MinoStatus
 tetris::Mino::get_mino_status (int mino_type)
 {
@@ -103,6 +147,7 @@ tetris::Mino::get_mino_status (int mino_type)
 /*
  * data: 2022/01/18
  * what: look at function name
+ * logic:
  * [x']   [cost -sint][x]
  * [  ] = [          ][ ]
  * [y']   [sint  cost][y]

@@ -100,8 +100,6 @@ tetris::Mino::get_mino_status (int mino_type)
   return mino_array_.at(mino_type);
 }
 
-#include <iostream>
-
 /*
  * data: 2022/01/18
  * what: look at function name
@@ -110,22 +108,24 @@ tetris::Mino::get_mino_status (int mino_type)
  * [y']   [sint  cost][y]
  */
 void tetris::
-Mino::rotation_mino (int mino_type, int direction)
+Mino::rotation_mino (int mino_type, int rot_direction)
 {
   std::vector<std::vector<int> > result_vec;
-  int rot_times = direction == LEFT_ROT_ ? 1 : 3;
-  int height = mino_array_.at(mino_type).height_;
-  int width  = mino_array_.at(mino_type).width_;
-  result_vec.resize (height);
+  int rot_times = (rot_direction == LEFT_ROT_ ? 1 : 3);
+  int height    = mino_array_.at(mino_type).height_;
+  int width     = mino_array_.at(mino_type).width_;
 
+  result_vec.resize (height);
   for (int i = 0; i < height; ++i)
     result_vec.at(i).resize(width);
 
-  for (int times = 0; times < rot_times; ++times)
-  for (int i = 0; i < height; ++i)
-    for (int j = 0; j < width; ++j)
-      result_vec.at(i).at(j) =
-        mino_array_.at(mino_type).mino_matrix_.at(j).at(height - 1 - i);
-
-  mino_array_.at(mino_type).mino_matrix_ = result_vec;
+  for (int times = 0; times < rot_times; ++times) {
+    for (int i = 0; i < height; ++i) {
+      for (int j = 0; j < width; ++j) {
+        result_vec.at(i).at(j) =
+          mino_array_.at(mino_type).mino_matrix_.at(j).at(height - 1 - i);
+      }
+    }
+    mino_array_.at(mino_type).mino_matrix_ = result_vec;
+  }
 }

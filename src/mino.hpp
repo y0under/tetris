@@ -46,7 +46,7 @@ namespace tetris
 
       Mino ();
       void mino_initializer ();
-      void rotation_mino (int mino_type, int direction);
+      void rotation_mino (int mino_type, int rot_direction);
       int get_number_of_types_mino ();
       MinoStatus get_mino_status (int type);
 

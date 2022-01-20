@@ -32,12 +32,13 @@ namespace tetris
       const int INTERVAL = 1'000'000 / FPS;
 
       // function
-      void generate_mino (std::uint32_t random_number, const int type_of_mino);
-      void create_wall ();
+      void generate_mino (std::uint32_t random_number);
+      void fallen_mino_processing ();
       void set_point_mino_top ();
       void keybord_processing ();
-      void when_any_input_form_keybord ();
-      void input_processing_from_keybord ();
+      void input_processing_from_keybord (const char input_char);
+      void undo_input_processing (
+          const char input_char, const int befor_y, const int befor_x);
       void print_screen_processing ();
       void arrive_bottom_processing ();
       bool is_intersect_mino_wall ();

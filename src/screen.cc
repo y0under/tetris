@@ -9,7 +9,7 @@ Screen::Screen ()
   // all blank
   for (int i = 0; i < SCREEN_HEIGHT_; ++i)
     for (int j = 0; j < SCREEN_WIDTH_; ++j)
-      screen_array_.at(i).at(j) = BLANK_MAEKER_;
+      screen_array_.at(i).at(j) = BLANK_MARKER_;
 
   create_first_wall ();
 }
@@ -21,7 +21,7 @@ Screen::create_first_wall ()
   for (int i = 0; i < SCREEN_WIDTH_; ++i)
     screen_array_.at(SCREEN_HEIGHT_ - 1).at(i) = WALL_MARKER_;
   // wall
-  for (int i = 0; i < SCREEN_HEIGHT_; ++i) {
+  for (int i = 0; i < SCREEN_HEIGHT_ - 1; ++i) {
     screen_array_.at(i).at(0)                 = WALL_MARKER_;
     screen_array_.at(i).at(SCREEN_WIDTH_ - 1) = WALL_MARKER_;
   }
@@ -41,7 +41,7 @@ Screen::print_screen ()
     for (int j = 0; j < SCREEN_WIDTH_; ++j) {
       printf ("%s", MARKER_CHAR_.at (screen_array_.at(i).at(j)).c_str ());
     }
-    puts ("");
+    printf ("\n");
   }
 }
 
@@ -50,25 +50,23 @@ tetris::Screen::get_screen_array ()
 {
   return screen_array_;
 }
-/*
-void tetris::
-Screen::set_screen ()
-{
-  // clear_screen ();
-  set_mino_to_screen ();
-}
-*/
 
 int tetris::
-Screen::get_wall_marker ()
+Screen::get_mino_marker ()
 {
-  return WALL_MARKER_;
+  return MINO_MARKER_;
+}
+
+int tetris::
+Screen::get_blank_marker ()
+{
+  return BLANK_MARKER_;
 }
 
 void tetris::
-Screen::set_wall (const int y, const int x)
+Screen::load_mino (const int y, const int x)
 {
-  screen_array_.at(y).at(x) = WALL_MARKER_;
+  screen_array_.at(y).at(x) = FALLEN_MINO_MARKER_;
 }
 
 void tetris::
@@ -95,7 +93,7 @@ Screen::erase_mino_on_screen ()
   for (int i = 0; i < SCREEN_HEIGHT_; ++i)
     for (int j = 0; j < SCREEN_WIDTH_; ++j)
       if (MINO_MARKER_ == screen_array_.at(i).at(j))
-        screen_array_.at(i).at(j) = BLANK_MAEKER_;
+        screen_array_.at(i).at(j) = BLANK_MARKER_;
 }
 
 void tetris::
@@ -103,7 +101,7 @@ Screen::delete_row_processing ()
 {
   for (int i = 0; i < SCREEN_HEIGHT_ - 1; ++i) {
     for (int j = 1; j < SCREEN_WIDTH_ - 1; ++ j) {
-      if (WALL_MARKER_ != screen_array_.at(i).at(j))
+      if (FALLEN_MINO_MARKER_ != screen_array_.at(i).at(j))
         break;
       if (SCREEN_WIDTH_ - 2 == j) {
         delete_row (i);
@@ -117,7 +115,7 @@ void tetris::
 Screen::delete_row (int y)
 {
   for (int i = 1; i < SCREEN_WIDTH_ - 1; ++i)
-    screen_array_.at(y).at(i) = BLANK_MAEKER_;
+    screen_array_.at(y).at(i) = BLANK_MARKER_;
 }
 
 void tetris::

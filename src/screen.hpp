@@ -11,8 +11,9 @@ namespace tetris
     private:
       enum {
         WALL_MARKER_,
-        BLANK_MAEKER_,
+        BLANK_MARKER_,
         MINO_MARKER_,
+        FALLEN_MINO_MARKER_,
         MARKER_NUMBER_
       };
 
@@ -21,7 +22,8 @@ namespace tetris
       std::vector<const std::string> MARKER_CHAR_ = {
         "🔳", // WALL_MARKER_
         "　", // BLANK_MAEKER_
-        "◻️ "  // MINO_MARKER_
+        "◻️ ", // MINO_MARKER_
+        "◻️ "  // FALLEN_MINO_MARKER_
       };
 
       // function
@@ -36,7 +38,7 @@ namespace tetris
 
       // function
       Screen ();
-      void set_wall (const int y, const int x);
+      void load_mino (const int y, const int x);
       void print_screen ();
       void set_mino_to_screen (
           const int left_top_x, const int left_top_y,
@@ -45,7 +47,8 @@ namespace tetris
       void erase_mino_on_screen ();
       void delete_row_processing ();
       const std::vector<std::vector<int> > get_screen_array ();
-      int get_wall_marker ();
+      int get_blank_marker ();
+      int get_mino_marker ();
 
   };
 } // namespace tetris

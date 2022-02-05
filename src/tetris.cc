@@ -1,6 +1,16 @@
 #include "tetris.hpp"
 
 /*
+ * date: 2022/01/21
+ * what: constructor
+ */
+tetris::
+Tetris::Tetris ()
+{
+  score_ = 0;
+}
+
+/*
  * date: 2022/01/20
  * what: main processing of tetris
  */
@@ -15,10 +25,10 @@ Tetris::tetris_processing ()
 
   while (1) {
     generate_mino (engine ());
-    screen_.print_screen ();
     set_point_mino_top ();
     if (is_intersect_mino_wall ())
       break;
+    print_screen_processing ();
     while (1) {
       keybord_processing ();
       now_clock = clock ();
@@ -54,6 +64,7 @@ Tetris::print_screen_processing ()
       mino_status.width_,
       mino_status.mino_matrix_);
   screen_.print_screen ();
+  printf ("score: %d\n", score_);
 }
 
 /*
@@ -213,8 +224,8 @@ Tetris::arrive_bottom_processing ()
 
 /*
  * date: 2022/01/20
- * what: if complete low,
- *       delete row
+ * what: if complete row,
+ *       delete it
  */
 void tetris::
 Tetris::delete_row_processing ()
@@ -225,8 +236,10 @@ Tetris::delete_row_processing ()
       if (screen_.get_fallen_mino_marker () !=
           screen_array.at(i).at(j))
         break;
-      if (j == screen_.SCREEN_WIDTH_ - 2)
+      if (j == screen_.SCREEN_WIDTH_ - 2) {
         screen_.delete_row_processing (i);
+        score_ += SCORE_PER_ONE_ROW_;
+      }
     }
   }
 }

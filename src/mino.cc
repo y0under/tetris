@@ -5,9 +5,9 @@
  * what: constructor
  */
 tetris::
-Mino::Mino ()
+Mino::Mino()
 {
-  mino_initializer ();
+  mino_initializer();
 }
 
 /*
@@ -15,15 +15,15 @@ Mino::Mino ()
  * what: create mino pattern
  */
 void tetris::
-Mino::mino_initializer ()
+Mino::mino_initializer()
 {
-  mino_initialize_I ();
-  mino_initialize_O ();
-  mino_initialize_S ();
-  mino_initialize_Z ();
-  mino_initialize_J ();
-  mino_initialize_L ();
-  mino_initialize_T ();
+  mino_initialize_I();
+  mino_initialize_O();
+  mino_initialize_S();
+  mino_initialize_Z();
+  mino_initialize_J();
+  mino_initialize_L();
+  mino_initialize_T();
 }
 
 /*
@@ -31,9 +31,9 @@ Mino::mino_initializer ()
  * what: push I matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_I ()
+Mino::mino_initialize_I()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       4, 4, {
       {0, 0, 0, 0},
       {1, 1, 1, 1},
@@ -46,9 +46,9 @@ Mino::mino_initialize_I ()
  * what: push O matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_O ()
+Mino::mino_initialize_O()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       2, 2, {
       {1, 1},
       {1, 1}}});
@@ -59,9 +59,9 @@ Mino::mino_initialize_O ()
  * what: push S matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_S ()
+Mino::mino_initialize_S()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       3, 3, {
       {0, 1, 1},
       {1, 1, 0},
@@ -73,9 +73,9 @@ Mino::mino_initialize_S ()
  * what: push Z matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_Z ()
+Mino::mino_initialize_Z()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       3, 3, {
       {1, 1, 0},
       {0, 1, 1},
@@ -87,9 +87,9 @@ Mino::mino_initialize_Z ()
  * what: push J matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_J ()
+Mino::mino_initialize_J()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       3, 3, {
       {1, 1, 1},
       {0, 0, 1},
@@ -101,9 +101,9 @@ Mino::mino_initialize_J ()
  * what: push L matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_L ()
+Mino::mino_initialize_L()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       3, 3, {
       {1, 1, 1},
       {1, 0, 0},
@@ -115,9 +115,9 @@ Mino::mino_initialize_L ()
  * what: push T matrix to mino_array_
  */
 void tetris::
-Mino::mino_initialize_T ()
+Mino::mino_initialize_T()
 {
-  mino_array_.push_back ({
+  mino_array_.push_back({
       3, 3, {
       {1, 1, 1},
       {0, 1, 0},
@@ -129,7 +129,7 @@ Mino::mino_initialize_T ()
  * what: getter for number of types mino
  */
 int tetris::
-Mino::get_number_of_types_mino ()
+Mino::get_number_of_types_mino()
 {
   return NUMBER_OF_TYPES_MINO_;
 }
@@ -139,7 +139,7 @@ Mino::get_number_of_types_mino ()
  * what: getter for particular mino
  */
 tetris::Mino::MinoStatus
-tetris::Mino::get_mino_status (int mino_type)
+tetris::Mino::get_mino_status(const int &mino_type)
 {
   return mino_array_.at(mino_type);
 }
@@ -153,14 +153,14 @@ tetris::Mino::get_mino_status (int mino_type)
  * [y']   [sint  cost][y]
  */
 void tetris::
-Mino::rotation_mino (int mino_type, int rot_direction)
+Mino::rotation_mino(const int &mino_type, const int &rot_direction)
 {
   std::vector<std::vector<int> > result_vec;
   int rot_times = (rot_direction == LEFT_ROT_ ? 1 : 3);
   int height    = mino_array_.at(mino_type).height_;
   int width     = mino_array_.at(mino_type).width_;
 
-  result_vec.resize (height);
+  result_vec.resize(height);
   for (int i = 0; i < height; ++i)
     result_vec.at(i).resize(width);
 

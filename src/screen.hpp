@@ -9,14 +9,6 @@ namespace tetris
   class Screen
   {
     private:
-      enum {
-        WALL_MARKER_,
-        BLANK_MARKER_,
-        MINO_MARKER_,
-        FALLEN_MINO_MARKER_,
-        MARKER_NUMBER_
-      };
-
       // value
       std::vector<std::vector<int> > screen_array_;
       std::vector<const std::string> MARKER_CHAR_ = {
@@ -27,30 +19,34 @@ namespace tetris
       };
 
       // function
-      void create_first_wall ();
-      void delete_row (int y);
-      void copy_row_to_under (int y);
+      void create_first_wall();
+      void delete_row(const int &);
+      void copy_row_to_under(const int &);
 
     public:
       // value
+      enum {
+        WALL_MARKER_,
+        BLANK_MARKER_,
+        MINO_MARKER_,
+        FALLEN_MINO_MARKER_,
+        MARKER_NUMBER_
+      };
+
       const int SCREEN_HEIGHT_ = 21;
       const int SCREEN_WIDTH_  = 12;
 
       // function
-      Screen ();
-      void load_mino (const int y, const int x);
-      void print_screen ();
-      void set_mino_to_screen (
-          const int left_top_x, const int left_top_y,
-          const int height, const int width,
-          const std::vector<std::vector<int> > mino_matrix);
-      void erase_mino_on_screen ();
-      void delete_row_processing (int row_number);
-      const std::vector<std::vector<int> > get_screen_array ();
-      int get_blank_marker ();
-      int get_mino_marker ();
-      int get_fallen_mino_marker ();
-
+      Screen();
+      void load_mino(const int &, const int &);
+      void print_screen();
+      void set_mino_to_screen(
+          const int &, const int &,
+          const int &, const int &,
+          const std::vector<std::vector<int> >);
+      void erase_mino_on_screen();
+      void delete_row_processing(const int &);
+      const std::vector<std::vector<int> > get_screen_array();
   };
 } // namespace tetris
 

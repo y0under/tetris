@@ -6,17 +6,17 @@
  * prepare first screen
  */
 tetris::
-Screen::Screen ()
+Screen::Screen()
 {
-  screen_array_.resize (SCREEN_HEIGHT_);
+  screen_array_.resize(SCREEN_HEIGHT_);
   for (int i = 0; i < SCREEN_HEIGHT_; ++i)
-    screen_array_.at(i).resize (SCREEN_WIDTH_);
+    screen_array_.at(i).resize(SCREEN_WIDTH_);
   // all blank
   for (int i = 0; i < SCREEN_HEIGHT_; ++i)
     for (int j = 0; j < SCREEN_WIDTH_; ++j)
       screen_array_.at(i).at(j) = BLANK_MARKER_;
 
-  create_first_wall ();
+  create_first_wall();
 }
 
 /*
@@ -25,7 +25,7 @@ Screen::Screen ()
  * called constructor
  */
 void tetris::
-Screen::create_first_wall ()
+Screen::create_first_wall()
 {
   // floor
   for (int i = 0; i < SCREEN_WIDTH_; ++i)
@@ -42,20 +42,20 @@ Screen::create_first_wall ()
  * what: look at function name
  */
 void tetris::
-Screen::print_screen ()
+Screen::print_screen()
 {
 #ifdef _WINDOWS
-  std::system ("cls");
+  std::system("cls");
 #else
-  std::system ("clear");
+  std::system("clear");
 #endif
 
-  // set_screen ();
+  // set_screen();
   for (int i = 0; i < SCREEN_HEIGHT_; ++i) {
     for (int j = 0; j < SCREEN_WIDTH_; ++j) {
-      printf ("%s", MARKER_CHAR_.at (screen_array_.at(i).at(j)).c_str ());
+      printf("%s", MARKER_CHAR_.at(screen_array_.at(i).at(j)).c_str());
     }
-    printf ("\n");
+    printf("\n");
   }
 }
 
@@ -64,40 +64,9 @@ Screen::print_screen ()
  * what: look at function name
  */
 const std::vector<std::vector<int> >
-tetris::Screen::get_screen_array ()
+tetris::Screen::get_screen_array()
 {
   return screen_array_;
-}
-
-/*
- * data: 2022/01/20
- * what: return mino marker in enum
- */
-int tetris::
-Screen::get_mino_marker ()
-{
-  return MINO_MARKER_;
-}
-
-/*
- * data: 2022/01/20
- * what: return blank marker in enum
- */
-int tetris::
-Screen::get_blank_marker ()
-{
-  return BLANK_MARKER_;
-}
-
-/*
- * data: 2022/01/20
- * what: return fallen mino marker
- *       in enum
- */
-int tetris::
-Screen::get_fallen_mino_marker ()
-{
-  return FALLEN_MINO_MARKER_;
 }
 
 /*
@@ -105,7 +74,7 @@ Screen::get_fallen_mino_marker ()
  * what: look at function name
  */
 void tetris::
-Screen::load_mino (const int y, const int x)
+Screen::load_mino(const int &y, const int &x)
 {
   screen_array_.at(y).at(x) = FALLEN_MINO_MARKER_;
 }
@@ -116,11 +85,11 @@ Screen::load_mino (const int y, const int x)
  *       to screen_array_
  */
 void tetris::
-Screen::set_mino_to_screen (
-    const int left_top_x,
-    const int left_top_y,
-    const int height,
-    const int width,
+Screen::set_mino_to_screen(
+    const int &left_top_x,
+    const int &left_top_y,
+    const int &height,
+    const int &width,
     const std::vector<std::vector<int> > mino_matrix)
 {
   for (int i = 0; i < height; ++i)
@@ -139,7 +108,7 @@ Screen::set_mino_to_screen (
  *       for print screen
  */
 void tetris::
-Screen::erase_mino_on_screen ()
+Screen::erase_mino_on_screen()
 {
   for (int i = 0; i < SCREEN_HEIGHT_; ++i)
     for (int j = 0; j < SCREEN_WIDTH_; ++j)
@@ -152,10 +121,10 @@ Screen::erase_mino_on_screen ()
  * what: look at function name
  */
 void tetris::
-Screen::delete_row_processing (int row_number)
+Screen::delete_row_processing(const int &row_number)
 {
-  delete_row (row_number);
-  copy_row_to_under (row_number);
+  delete_row(row_number);
+  copy_row_to_under(row_number);
 }
 
 /*
@@ -163,7 +132,7 @@ Screen::delete_row_processing (int row_number)
  * what: look at function name
  */
 void tetris::
-Screen::delete_row (int y)
+Screen::delete_row(const int &y)
 {
   for (int i = 1; i < SCREEN_WIDTH_ - 1; ++i)
     screen_array_.at(y).at(i) = BLANK_MARKER_;
@@ -175,7 +144,7 @@ Screen::delete_row (int y)
  *       pad blank row by up row
  */
 void tetris::
-Screen::copy_row_to_under (int y)
+Screen::copy_row_to_under(const int &y)
 {
   for (int i = y; i != 0; --i)
     for (int j = 1; j < SCREEN_WIDTH_ - 1; ++j)

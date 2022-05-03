@@ -30,23 +30,26 @@ namespace tetris
       int mino_type_;
       const int FPS      = 2;
       const int INTERVAL = 1'000'000 / FPS;
+      const int SCORE_PER_ONE_ROW_ = 10;
+      unsigned int score_;
 
       // function
-      void generate_mino (std::uint32_t random_number);
-      void fallen_mino_processing ();
-      void set_point_mino_top ();
-      void keybord_processing ();
-      void input_processing_from_keybord (const char input_char);
-      void undo_input_processing (
+      void generate_mino(std::uint32_t random_number);
+      void fallen_mino_processing();
+      void set_point_mino_top();
+      void keybord_processing();
+      void input_processing_from_keybord(const char input_char);
+      void undo_input_processing(
           const char input_char, const int befor_y, const int befor_x);
-      void print_screen_processing ();
-      void arrive_bottom_processing ();
-      bool is_intersect_mino_wall ();
-      void delete_row_processing ();
+      void print_screen_processing();
+      void arrive_bottom_processing();
+      bool is_intersect_mino_wall();
+      void delete_row_processing();
 
     public:
       // function
-      void tetris_processing ();
+      Tetris();
+      void tetris_processing();
   };
 }// namespace tetris
 

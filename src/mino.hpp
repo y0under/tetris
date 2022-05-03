@@ -29,13 +29,13 @@ namespace tetris
       std::vector<MinoStatus> mino_array_;
 
       // function
-      void mino_initialize_I ();
-      void mino_initialize_O ();
-      void mino_initialize_S ();
-      void mino_initialize_Z ();
-      void mino_initialize_J ();
-      void mino_initialize_L ();
-      void mino_initialize_T ();
+      void mino_initialize_I();
+      void mino_initialize_O();
+      void mino_initialize_S();
+      void mino_initialize_Z();
+      void mino_initialize_J();
+      void mino_initialize_L();
+      void mino_initialize_T();
 
     public:
       enum {
@@ -44,11 +44,11 @@ namespace tetris
         ROT_TYPES_
       };
 
-      Mino ();
-      void mino_initializer ();
-      void rotation_mino (int mino_type, int rot_direction);
-      int get_number_of_types_mino ();
-      MinoStatus get_mino_status (int type);
+      Mino();
+      void mino_initializer();
+      void rotation_mino(const int &, const int &);
+      int get_number_of_types_mino();
+      MinoStatus get_mino_status(const int &);
 
   };
 } // namespace tetris

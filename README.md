@@ -1,4 +1,6 @@
 # tetris
+## 環境
+macOS 12
 ## ビルド
 コマンドラインに git clone https://github.com/y0ub/tetris と入力して Enterキーを押す
 コマンドラインに make と入力して Enterキーを押す

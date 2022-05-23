@@ -1,7 +1,8 @@
 # tetris
-## 遊び方
+## ビルド
 コマンドラインに git clone https://github.com/y0ub/tetris と入力して Enterキーを押す
 コマンドラインに make と入力して Enterキーを押す
+## 実行
 コマンドラインに make run と入力して Enterキーを押すと実行する
 
 ## 操作方法

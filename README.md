@@ -2,10 +2,10 @@
 ## 環境
 macOS 12
 ## ビルド
-コマンドラインに git clone https://github.com/y0ub/tetris と入力して Enterキーを押す
-コマンドラインに make と入力して Enterキーを押す
+    git clone https://github.com/y0ub/tetris  
+    make  
 ## 実行
-コマンドラインに make run と入力して Enterキーを押すと実行する
+    make run
 
 ## 操作方法
 右:A 左:D 下:S 回転: L or R

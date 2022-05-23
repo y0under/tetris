@@ -7,6 +7,14 @@ release_dir     = bin/release
 release_bin     = tetris
 release_objects = $(release_dir)/screen.o $(release_dir)/mino.o $(release_dir)/tetris.o
 
+release: $(release_objects)
+	mkdir -p bin
+	mkdir -p $(release_dir)
+	clang++ -c -o $(release_dir)/tetris.o src/tetris.cc $(cc_version) $(release_options)
+	clang++ -c -o $(release_dir)/screen.o src/screen.cc $(cc_version) $(release_options)
+	clang++ -c -o $(release_dir)/mino.o src/mino.cc $(cc_version) $(release_options)
+	clang++ -o $(release_dir)/$(release_bin) src/main.cc $(cc_version) $(release_options) $^
+
 debug: $(debug_objects)
 	clang++ -o $(debug_dir)/$(debug_bin) src/main.cc $(cc_version) $(debug_options) $^
 
@@ -15,12 +23,8 @@ debug_objects:
 	clang++ -c -o $(debug_dir)/screen.o src/screen.cc $(cc_version) $(debug_options)
 	clang++ -c -o $(debug_dir)/mino.o src/mino.cc $(cc_version) $(debug_options)
 
-release: $(release_objects)
-	clang++ -c -o $(release_dir)/tetris.o src/tetris.cc $(cc_version) $(release_options)
-	clang++ -c -o $(release_dir)/screen.o src/screen.cc $(cc_version) $(release_options)
-	clang++ -c -o $(release_dir)/mino.o src/mino.cc $(cc_version) $(release_options)
-	clang++ -o $(release_dir)/$(release_bin) src/main.cc $(cc_version) $(release_options) $^
-
-
 debug_run:
 	./$(debug_dir)/$(debug_bin)
+
+run:
+	./$(release_dir)/tetris

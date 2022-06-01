@@ -3,6 +3,7 @@
 macOS 12
 ## ビルド
     git clone https://github.com/y0ub/tetris  
+    cd tetris  
     make  
 ## 実行
     make run

@@ -14,8 +14,8 @@
 #include "../util/y0_kbhit.h"
 #endif
 
-#include "mino.hpp"
-#include "screen.hpp"
+#include "mino.h"
+#include "screen.h"
 
 namespace tetris
 {

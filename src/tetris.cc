@@ -1,4 +1,4 @@
-#include "tetris.hpp"
+#include "tetris.h"
 
 /*
  * date: 2022/01/21
@@ -11,12 +11,18 @@ Tetris::Tetris()
 }
 
 /*
- * date: 2022/01/20
+ * date: 2022/06/26
  * what: main processing of tetris
  */
 void tetris::
 Tetris::tetris_processing()
 {
+#ifdef _WINDOWS
+  std::system("cls");
+#else
+  std::system("clear");
+#endif
+
   std::random_device seed_gen;
   std::mt19937 engine(seed_gen());
 
@@ -57,14 +63,14 @@ Tetris::print_screen_processing()
 {
   auto mino_status = mino_.get_mino_status(mino_type_);
   screen_.erase_mino_on_screen();
-  screen_.set_mino_to_screen (
+  screen_.set_mino_to_screen(
       mino_left_top_x_,
       mino_left_top_y_,
       mino_status.height_,
       mino_status.width_,
       mino_status.mino_matrix_);
   screen_.print_screen();
-  printf ("score: %d\n", score_);
+  printf("score: %d\n", score_);
 }
 
 /*

@@ -1,4 +1,4 @@
-#include "screen.hpp"
+#include "screen.h"
 
 /*
  * date: 2022/01/20
@@ -38,19 +38,13 @@ Screen::create_first_wall()
 }
 
 /*
- * data: 2022/01/20
+ * data: 2022/06/26
  * what: look at function name
  */
 void tetris::
 Screen::print_screen()
 {
-#ifdef _WINDOWS
-  std::system("cls");
-#else
-  std::system("clear");
-#endif
-
-  // set_screen();
+  printf("\033[%dA\n", SCREEN_HEIGHT_ + 2);
   for (int i = 0; i < SCREEN_HEIGHT_; ++i) {
     for (int j = 0; j < SCREEN_WIDTH_; ++j) {
       printf("%s", MARKER_CHAR_.at(screen_array_.at(i).at(j)).c_str());

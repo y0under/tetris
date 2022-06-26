@@ -1,4 +1,4 @@
-#include "mino.hpp"
+#include "mino.h"
 
 /*
  * date: 2022/01/20

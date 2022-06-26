@@ -1,30 +1,27 @@
-cc_version      = -std=c++17
-debug_options   = -Wall -g
-debug_dir       = bin/debug
-debug_bin       = debug
-debug_objects   = $(debug_dir)/screen.o $(debug_dir)/mino.o $(debug_dir)/tetris.o
-release_dir     = bin/release
-release_bin     = tetris
-release_objects = $(release_dir)/screen.o $(release_dir)/mino.o $(release_dir)/tetris.o
+cc_version    = -std=c++20
+debug_options = -Wall -g --pedantic-errors $(cc_version)
+options       = $(debug_options)
+out_dir       = bin
+bin_name      = tetris
+objects       = $(out_dir)/screen.o $(out_dir)/mino.o $(out_dir)/tetris.o
 
-release: $(release_objects)
-	mkdir -p bin
-	mkdir -p $(release_dir)
-	clang++ -c -o $(release_dir)/tetris.o src/tetris.cc $(cc_version) $(release_options)
-	clang++ -c -o $(release_dir)/screen.o src/screen.cc $(cc_version) $(release_options)
-	clang++ -c -o $(release_dir)/mino.o src/mino.cc $(cc_version) $(release_options)
-	clang++ -o $(release_dir)/$(release_bin) src/main.cc $(cc_version) $(release_options) $^
+$(out_dir)/$(bin_name): src/main.cc $(objects)
+	mkdir -p $(out_dir)
+	clang++ -o $(out_dir)/$(bin_name) $< $(options) $(objects)
 
-debug: $(debug_objects)
-	clang++ -o $(debug_dir)/$(debug_bin) src/main.cc $(cc_version) $(debug_options) $^
+$(out_dir)/tetris.o: src/tetris.cc src/tetris.hpp
+	clang++ -c -o $@ $< $(options)
 
-debug_objects:
-	clang++ -c -o $(debug_dir)/tetris.o src/tetris.cc $(cc_version) $(debug_options)
-	clang++ -c -o $(debug_dir)/screen.o src/screen.cc $(cc_version) $(debug_options)
-	clang++ -c -o $(debug_dir)/mino.o src/mino.cc $(cc_version) $(debug_options)
+$(out_dir)/screen.o: src/screen.cc src/screen.hpp
+	mkdir -p $(out_dir)
+	clang++ -c -o $@ $< $(options)
+
+$(out_dir)/mino.o: src/mino.cc src/mino.hpp
+	clang++ -c -o $@ $< $(options)
 
 debug_run:
-	./$(debug_dir)/$(debug_bin)
+	./$(out_dir)/$(bin_name)
 
 run:
-	./$(release_dir)/tetris
+	./$(out_dir)/tetris
+

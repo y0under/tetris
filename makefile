@@ -9,14 +9,14 @@ $(out_dir)/$(bin_name): src/main.cc $(objects)
 	mkdir -p $(out_dir)
 	clang++ -o $(out_dir)/$(bin_name) $< $(options) $(objects)
 
-$(out_dir)/tetris.o: src/tetris.cc src/tetris.hpp
+$(out_dir)/tetris.o: src/tetris.cc src/tetris.h
 	clang++ -c -o $@ $< $(options)
 
-$(out_dir)/screen.o: src/screen.cc src/screen.hpp
+$(out_dir)/screen.o: src/screen.cc src/screen.h
 	mkdir -p $(out_dir)
 	clang++ -c -o $@ $< $(options)
 
-$(out_dir)/mino.o: src/mino.cc src/mino.hpp
+$(out_dir)/mino.o: src/mino.cc src/mino.h
 	clang++ -c -o $@ $< $(options)
 
 debug_run:
